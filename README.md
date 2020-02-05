@@ -1,3 +1,49 @@
+# Disclaimer
+
+This framework is still in a working stage. Keep in mind that anything seen here could possibly change in the future. This is given as an example for now to help teams facilitate conversations.
+
+## Getting Started
+
+1. `yarn`
+2. `yarn start`
+
+## Major Framework Dependencies
+
+- Navigation: [react-router-dom](https://reacttraining.com/react-router/)
+- State: [mobx-state-tree](https://mobx-state-tree.js.org/)
+- UI Library: [Material UI](https://material-ui.com/)
+- Translations: [i18next](https://www.i18next.com/)
+- API Service: [Apisauce](https://github.com/infinitered/apisauce)
+- [humps](https://github.com/domchristie/humps) (optional if data coming from requests is already camelCase)
+
+## Features include
+
+- Private/protected routes
+- Data driven Forms
+- Loading indicator button
+- RequestStatus for API requests in MST. Hook up your UI to the status to display loading indicators or any other action
+- Dynamically show/hide features based on config loaded
+
+## Additional helpful links
+
+- [Custom environment variables](https://create-react-app.dev/docs/adding-custom-environment-variables/#adding-development-environment-variables-in-env)
+- [Create React App documentation](https://create-react-app.dev/docs/getting-started)
+- [React documentation](https://reactjs.org/)
+
+## To Do
+
+- General cleanup
+- Look at better environment variable handling
+- Error reporting
+- Documentation
+- Error messages for fields on Forms
+- Breaking out components (currently Form, LoadingButton, PrivateRoute, PublicRoute) into a shared UI library
+- Fix tests (include MST store mocks in tests)
+
+## Recommended Dev Tools
+
+- [MobX Developer Tools Chrome Plugin](https://chrome.google.com/webstore/detail/mobx-developer-tools/pfgnfdagidkfgccljigdamigbcnndkod?hl=en)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

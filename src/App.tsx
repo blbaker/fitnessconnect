@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
-const App = () => {
+import './App.css';
+import { useMst } from './core/stores/RootStore';
+import i18n from './core/i18n';
+import { defaultTheme } from './theme';
+import Root from './components/Root/Root';
+
+const App: React.FC = () => {
+  const { configStore } = useMst();
+
+  useEffect(() => {
+    i18n.init({
+      lng: configStore.currentLanguage,
+      fallbackLng: configStore.fallbackLanguages,
+    });
+
+    const translations = configStore.translations;
+    Object.keys(translations).forEach(language => {
+      i18n.addResourceBundle(language, 'translation', translations[language], true, true);
+    });
+    return;
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MuiThemeProvider theme={defaultTheme}>
+      <CssBaseline />
+      <Root></Root>
+    </MuiThemeProvider>
   );
-}
+};
 
 export default App;
