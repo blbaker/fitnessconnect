@@ -29,6 +29,7 @@ This framework is still in a working stage. Keep in mind that anything seen here
 - [Custom environment variables](https://create-react-app.dev/docs/adding-custom-environment-variables/#adding-development-environment-variables-in-env)
 - [Create React App documentation](https://create-react-app.dev/docs/getting-started)
 - [React documentation](https://reactjs.org/)
+- [Wes Bos provides great React tutorials/learning](https://www.youtube.com/wesbos)
 
 ## To Do
 
