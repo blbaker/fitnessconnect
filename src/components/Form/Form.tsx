@@ -4,7 +4,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid, { GridSize } from '@material-ui/core/Grid';
 
-import { replaceInArray, checkValidity } from './helpers';
+import { replaceInArray, checkValidity, checkForErrors } from './helpers';
 import { Input } from './inputs/Input';
 import { FormSchema, ColorPickerElement, Element } from './models';
 import { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
@@ -44,6 +44,7 @@ export const Form: React.FC<FormProps> = ({ children, onSubmit, onChange, schema
     updatedElements = updatedElements.map((item: Element | ColorPickerElement) => ({
       ...item,
       valid: checkValidity(item.value, item.validation),
+      errors: checkForErrors(item.value, item.validation),
     }));
 
     let formIsValid = updatedElements.every((item: Element | ColorPickerElement) =>

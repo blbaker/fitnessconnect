@@ -5,6 +5,7 @@ import { TimePicker, DatePicker } from '@material-ui/pickers';
 
 import { ColorPicker } from './ColorPicker';
 import { Element, ColorPickerElement } from '../models';
+import { FormHelperText } from '@material-ui/core';
 
 interface InputProps extends Element {
   variant?: any;
@@ -24,6 +25,8 @@ export const Input: React.FC<InputProps | ColorPickerProps> = ({
   inputType,
   show = true,
   onChange = () => {},
+  errors = {},
+  validationMessages = {},
   ...extraProps
 }) => {
   extraProps.error = !valid && !!validation && touched;
@@ -60,5 +63,18 @@ export const Input: React.FC<InputProps | ColorPickerProps> = ({
     }
   };
 
-  return <>{show ? getInput(inputType) : null}</>;
+  return (
+    <>
+      {show ? getInput(inputType) : null}
+      {show && extraProps.error
+        ? Object.keys(errors).map(errorKey => {
+            return (
+              <FormHelperText key={errorKey} error>
+                {validationMessages[errorKey]}
+              </FormHelperText>
+            );
+          })
+        : null}
+    </>
+  );
 };

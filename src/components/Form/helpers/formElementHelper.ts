@@ -5,6 +5,7 @@ export const formElementHelper = ({
   name = '',
   show = true,
   validation = {},
+  validationMessages = {},
   value = '',
   ...other
 }) => {
@@ -17,6 +18,7 @@ export const formElementHelper = ({
     touched: false,
     valid: false,
     validation,
+    validationMessages,
     value,
     ...other,
   };

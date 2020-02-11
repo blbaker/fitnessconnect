@@ -1,5 +1,4 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { useTranslation } from 'react-i18next';
 
@@ -29,12 +28,6 @@ export const Classes: React.FC<ClassesProps> = observer(props => {
 
       {/* This is a disabled widget based on loaded config */}
       {configStore.features.otherThirdPartyWidget && <div>Other Third Party Widget</div>}
-
-      {/* Load child routes */}
-      {routes &&
-        routes.map(route => (
-          <Route key={route.path} path={route.path} component={route.component} />
-        ))}
     </div>
   );
 });

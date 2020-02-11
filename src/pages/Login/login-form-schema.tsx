@@ -9,7 +9,12 @@ export const loginFormSchema: FormSchema = formHelper([
     name: 'email-address',
     label: 'Email Address',
     inputType: 'input',
-    validation: { required: true },
+    type: 'email',
+    validation: { required: true, isEmail: true },
+    validationMessages: {
+      required: 'Email Address is required.',
+      isEmail: 'Email Address is invalid.',
+    },
   }),
   formElementHelper({
     cols: {
@@ -20,5 +25,6 @@ export const loginFormSchema: FormSchema = formHelper([
     inputType: 'input',
     type: 'password',
     validation: { required: true },
+    validationMessages: { required: 'Password is required.' },
   }),
 ]);
