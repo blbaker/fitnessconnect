@@ -37,7 +37,6 @@ This framework is still in a working stage. Keep in mind that anything seen here
 - Look at better environment variable handling
 - Error reporting
 - Documentation
-- Error messages for fields on Forms
 - Breaking out components (currently Form, LoadingButton, PrivateRoute, PublicRoute) into a shared UI library
 - Fix tests (include MST store mocks in tests)
 
