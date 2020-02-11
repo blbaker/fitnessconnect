@@ -15,6 +15,7 @@ interface FormProps {
   onChange(form: FormSchema): void;
   schema: FormSchema;
   style?: object;
+  values?: object;
 }
 
 const useStyles = makeStyles({
@@ -23,7 +24,14 @@ const useStyles = makeStyles({
   },
 });
 
-export const Form: React.FC<FormProps> = ({ children, onSubmit, onChange, schema, style }) => {
+export const Form: React.FC<FormProps> = ({
+  children,
+  onSubmit,
+  onChange,
+  schema,
+  values,
+  style,
+}) => {
   const classes = useStyles({});
 
   const onFormSubmit = (event: FormEvent) => {
@@ -73,7 +81,12 @@ export const Form: React.FC<FormProps> = ({ children, onSubmit, onChange, schema
         <Grid container spacing={3}>
           {schema.elements.map(element => (
             <Grid item key={element.name} {...calculateColumns(element)}>
-              <Input style={style} onChange={onFormChange(element.name)} {...element} />
+              <Input
+                style={style}
+                onChange={onFormChange(element.name)}
+                {...element}
+                value={values[element.name]}
+              />
             </Grid>
           ))}
         </Grid>

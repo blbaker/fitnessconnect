@@ -40,6 +40,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const formDataExample = {
+  'email-address': 'test@test.com',
+  password: 'password',
+};
+
 export const Login: React.FC<LoginProps> = observer(() => {
   const theme = useTheme();
   const classes = useStyles(theme);
@@ -73,7 +78,12 @@ export const Login: React.FC<LoginProps> = observer(() => {
       {loginError && <Alert severity="error">{t(loginError)}</Alert>}
       {!authStore.isLoggedIn ? (
         <Paper className={classes.container}>
-          <Form onSubmit={handleSubmit} onChange={handleFormChange} schema={form}>
+          <Form
+            onSubmit={handleSubmit}
+            onChange={handleFormChange}
+            schema={form}
+            values={formDataExample}
+          >
             <LoadingButton
               type="submit"
               variant="contained"

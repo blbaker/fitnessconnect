@@ -1,11 +1,11 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import { TimePicker, DatePicker } from '@material-ui/pickers';
 
 import { ColorPicker } from './ColorPicker';
 import { Element, ColorPickerElement } from '../models';
-import { FormHelperText } from '@material-ui/core';
 
 interface InputProps extends Element {
   variant?: any;
@@ -18,14 +18,14 @@ interface ColorPickerProps extends ColorPickerElement {
 }
 
 export const Input: React.FC<InputProps | ColorPickerProps> = ({
+  errors = {},
+  inputType,
+  onChange = () => {},
+  show = true,
+  style = {},
+  touched = true,
   valid = true,
   validation = {},
-  touched = true,
-  style = {},
-  inputType,
-  show = true,
-  onChange = () => {},
-  errors = {},
   validationMessages = {},
   ...extraProps
 }) => {
