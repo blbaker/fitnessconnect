@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { ChromePicker, ColorResult, Color } from 'react-color';
+import { makeStyles, useTheme } from '@material-ui/core';
 
 interface ColorPickerProps {
   onChange: Function;
@@ -8,9 +9,26 @@ interface ColorPickerProps {
   value?: Color;
 }
 
+const useStyles = makeStyles(() => ({
+  popover: {
+    position: 'absolute',
+    zIndex: 2,
+  },
+  wrapper: {
+    position: 'fixed',
+    top: '0px',
+    left: '0px',
+    right: '0px',
+    bottom: '0px',
+  },
+}));
+
 export const ColorPicker: React.FC<ColorPickerProps> = ({ onChange, styles, value, ...other }) => {
+  const theme = useTheme();
+  const classes = useStyles(theme);
+
   const [show, setShow] = useState(false);
-  const [lastValidInput, setLastValidInput] = useState('');
+  const [lastValidInput, setLastValidInput] = useState(value || '');
 
   const onColorChange = (color: ColorResult) => {
     setLastValidInput(color.hex);
@@ -44,11 +62,11 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({ onChange, styles, valu
 
   return (
     <div>
-      <TextField value={value} onClick={handleClick} onChange={onInputChange} {...other} />
+      <TextField value={lastValidInput} onClick={handleClick} onChange={onInputChange} {...other} />
       {show ? (
-        <div className={styles.popover}>
-          <div className={styles.wrapper} onClick={handleClose} />
-          <ChromePicker color={value} disableAlpha onChange={onColorChange} />
+        <div className={classes.popover}>
+          <div className={classes.wrapper} onClick={handleClose} />
+          <ChromePicker color={lastValidInput} disableAlpha onChange={onColorChange} />
         </div>
       ) : null}
     </div>

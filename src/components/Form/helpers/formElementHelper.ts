@@ -1,6 +1,8 @@
+import { Element, PickerElement } from '../models';
+
 export const formElementHelper = ({
   fullWidth = true,
-  inputType = '',
+  inputType,
   label = '',
   name = '',
   show = true,
@@ -8,7 +10,7 @@ export const formElementHelper = ({
   validationMessages = {},
   value = '',
   ...other
-}) => {
+}): Element | PickerElement => {
   return {
     fullWidth,
     inputType,

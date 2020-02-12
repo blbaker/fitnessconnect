@@ -6,7 +6,7 @@ import Grid, { GridSize } from '@material-ui/core/Grid';
 
 import { replaceInArray, checkValidity, checkForErrors } from './helpers';
 import { Input } from './inputs/Input';
-import { FormSchema, ColorPickerElement, Element } from './models';
+import { FormSchema, PickerElement, Element } from './models';
 import { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
 
 interface FormProps {
@@ -44,18 +44,18 @@ export const Form: React.FC<FormProps> = ({
   ) => {
     const value = event.target ? (event.target as any).value : event;
 
-    let updatedElements: (Element | ColorPickerElement)[] = replaceInArray(schema.elements, name, {
+    let updatedElements: (Element | PickerElement)[] = replaceInArray(schema.elements, name, {
       value,
       touched: true,
     });
 
-    updatedElements = updatedElements.map((item: Element | ColorPickerElement) => ({
+    updatedElements = updatedElements.map((item: Element | PickerElement) => ({
       ...item,
       valid: checkValidity(item.value, item.validation),
       errors: checkForErrors(item.value, item.validation),
     }));
 
-    let formIsValid = updatedElements.every((item: Element | ColorPickerElement) =>
+    let formIsValid = updatedElements.every((item: Element | PickerElement) =>
       item.show ? item.valid : true,
     );
 
@@ -66,7 +66,7 @@ export const Form: React.FC<FormProps> = ({
   };
 
   const calculateColumns = (
-    element: Element | ColorPickerElement,
+    element: Element | PickerElement,
   ): Partial<Record<Breakpoint, boolean | GridSize>> => {
     if (element.cols) {
       return element.cols;
@@ -85,7 +85,7 @@ export const Form: React.FC<FormProps> = ({
                 style={style}
                 onChange={onFormChange(element.name)}
                 {...element}
-                value={values[element.name]}
+                value={values ? values[element.name] : undefined}
               />
             </Grid>
           ))}

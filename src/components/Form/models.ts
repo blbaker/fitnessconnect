@@ -14,12 +14,17 @@ export type OnChangeType = (
   name: any,
 ) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 
+interface ValidationMessage {
+  [name: string]: string;
+}
+
 export interface Element {
   inputType: 'input' | 'select' | 'multiLine' | 'timePicker' | 'datePicker' | 'colorPicker';
   label: string;
   name: string;
   show?: boolean;
   validation?: Validator;
+  validationMessages?: ValidationMessage;
   value: string;
   valid: boolean;
   touched: boolean;
@@ -28,12 +33,12 @@ export interface Element {
   fullWidth?: boolean;
 }
 
-export interface ColorPickerElement extends Element {
+export interface PickerElement extends Element {
   value: string;
   onChange: OnChangeType;
 }
 
 export interface FormSchema {
   valid: boolean;
-  elements: (Element | ColorPickerElement)[];
+  elements: (Element | PickerElement)[];
 }

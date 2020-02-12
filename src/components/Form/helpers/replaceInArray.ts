@@ -1,11 +1,11 @@
-import { Element, ColorPickerElement } from '../models';
+import { Element, PickerElement } from '../models';
 
 export const replaceInArray = (
-  array: (Element | ColorPickerElement)[],
+  array: (Element | PickerElement)[],
   name: string,
   newValues: any,
-): (Element | ColorPickerElement)[] => {
-  return array.map((item: Element | ColorPickerElement) => {
+): (Element | PickerElement)[] => {
+  return array.map((item: Element | PickerElement) => {
     if (item.name === name) {
       return {
         ...array.find(item => item.name === name),

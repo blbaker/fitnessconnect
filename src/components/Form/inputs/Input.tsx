@@ -5,14 +5,14 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import { TimePicker, DatePicker } from '@material-ui/pickers';
 
 import { ColorPicker } from './ColorPicker';
-import { Element, ColorPickerElement } from '../models';
+import { PickerElement, Element } from '../models';
 
 interface InputProps extends Element {
   variant?: any;
   [name: string]: any;
 }
 
-interface ColorPickerProps extends ColorPickerElement {
+interface ColorPickerProps extends PickerElement {
   onChange: any;
   [name: string]: any;
 }
