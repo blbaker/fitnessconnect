@@ -38,7 +38,6 @@ This framework is still in a working stage. Keep in mind that anything seen here
 - Error reporting
 - Documentation
 - Breaking out components (currently Form, LoadingButton, PrivateRoute, PublicRoute) into a shared UI library
-- Fix tests (include MST store mocks in tests)
 
 ## Recommended Dev Tools
 
