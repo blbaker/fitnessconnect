@@ -12,9 +12,9 @@ export const Root: React.FC = observer(() => {
     <Switch>
       {routes.map(route => {
         return !route.hasOwnProperty('canActivate') ? (
-          <PublicRoute key={route.path} {...route} />
+          <PublicRoute key={route.name} {...route} />
         ) : (
-          <PrivateRoute key={route.path} {...route} />
+          <PrivateRoute key={route.name} {...route} />
         );
       })}
     </Switch>

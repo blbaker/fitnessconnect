@@ -5,23 +5,29 @@ import Home from '../../pages/Home/Home';
 import Login from '../../pages/Login/Login';
 import Class from '../../pages/Classes/Class/Class';
 import Classes from '../../pages/Classes/Classes';
+import NotFound from '../../pages/NotFound/NotFound';
 import { AuthStore } from '../stores/store.types';
 import PrivateLayout from '../../components/PrivateLayout/PrivateLayout';
 import PublicLayout from '../../components/PublicLayout/PublicLayout';
 
-export interface Route {
-  canActivate?: boolean;
+export interface BaseRoute {
   component: React.FC<any>;
-  exact?: boolean;
-  failurePath?: history.LocationDescriptor;
   layout?: string | React.FC<any> | React.ComponentClass<any, any>;
   name?: string;
-  path: string;
+  exact?: boolean;
+  path?: string;
   redirectTo?: string;
-  routes?: Route[];
 }
 
-export const routesSchema = (authStore: AuthStore): Route[] => [
+export interface NotFoundRoute extends BaseRoute {}
+
+export interface Route extends BaseRoute {
+  canActivate?: boolean;
+  failurePath?: history.LocationDescriptor;
+  routes?: (Route | NotFoundRoute)[];
+}
+
+export const routesSchema = (authStore: AuthStore): (Route | NotFoundRoute)[] => [
   {
     name: 'Login',
     path: '/login',
@@ -52,5 +58,10 @@ export const routesSchema = (authStore: AuthStore): Route[] => [
     component: Home,
     exact: true,
     redirectTo: authStore.isLoggedIn ? '/classes' : '/login',
+  },
+  {
+    name: '404',
+    component: NotFound,
+    layout: PublicLayout,
   },
 ];
