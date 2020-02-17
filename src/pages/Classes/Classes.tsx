@@ -25,7 +25,6 @@ export const Classes: React.FC<ClassesProps> = observer(props => {
           {configStore.features.cyberobicsWidget && <CyberobicsWidget></CyberobicsWidget>}
         </Grid>
       </Grid>
-
       {/* This is a disabled widget based on loaded config */}
       {configStore.features.otherThirdPartyWidget && <div>Other Third Party Widget</div>}
     </div>

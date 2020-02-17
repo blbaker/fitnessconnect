@@ -6,6 +6,8 @@ import { MobxEnvironment } from '../../core/mobx-environment';
 import { ROOT_STATE_STORAGE_KEY, ACCESS_TOKEN_KEY } from '../../core/mobx-constants';
 import { AuthStoreModel, ConfigStoreModel, NavigationStoreModel, UserStoreModel } from './';
 
+const userRelatedStores = ['userStore', 'authStore'];
+
 export const RootStoreModel = types
   .model('RootStore')
   .props({
@@ -27,6 +29,13 @@ export const RootStoreModel = types
       clear([ACCESS_TOKEN_KEY, ROOT_STATE_STORAGE_KEY]);
       self.environment.api.destroy();
       applySnapshot(self, {});
+    },
+    logout: () => {
+      clear([ACCESS_TOKEN_KEY, ROOT_STATE_STORAGE_KEY]);
+      self.environment.api.destroy();
+      userRelatedStores.forEach(store => {
+        applySnapshot(self[store], {});
+      });
     },
   }));
 

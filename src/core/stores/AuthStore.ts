@@ -60,9 +60,9 @@ export const AuthStoreModel = types
           password,
         );
         if (response.kind === 'ok') {
-          console.log(response);
           self.updateUserToken(response.data.idToken);
           self.getUserStore().updateUser();
+          self.rootStore.configStore.load();
           self.setStatus(RequestStatus.DONE);
         } else {
           self.setStatus(RequestStatus.ERROR);
@@ -74,6 +74,6 @@ export const AuthStoreModel = types
       }
     }),
     logout: () => {
-      self.rootStore.reset();
+      self.rootStore.logout();
     },
   }));

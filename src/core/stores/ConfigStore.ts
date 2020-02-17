@@ -54,12 +54,14 @@ export const ConfigStoreModel = types
     }),
     loadEnabledFeatures: flow(function*() {
       // TODO Load this from the backend
-      yield new Promise(resolve => {
-        applySnapshot(self.enabledFeatures, {
-          cyberobicsWidget: true,
-          otherThirdPartyWidget: false,
-        });
-        resolve();
+      yield new Promise((resolve, reject) => {
+        setTimeout(() => {
+          applySnapshot(self.enabledFeatures, {
+            cyberobicsWidget: true,
+            otherThirdPartyWidget: false,
+          });
+          resolve();
+        }, 500);
       });
     }),
   }))

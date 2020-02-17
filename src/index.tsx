@@ -11,11 +11,13 @@ import { setupRootStore } from './core/setup-mobx';
 const { rootStore, history } = setupRootStore();
 
 ReactDOM.render(
-  <Provider value={rootStore}>
-    <Router history={history}>
-      <App />
-    </Router>
-  </Provider>,
+  <React.Suspense fallback={<></>}>
+    <Provider value={rootStore}>
+      <Router history={history}>
+        <App />
+      </Router>
+    </Provider>
+  </React.Suspense>,
   document.getElementById('root'),
 );
 
