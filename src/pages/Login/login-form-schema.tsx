@@ -47,4 +47,15 @@ export const loginFormSchema: FormSchema = formHelper([
     validation: { isDateAfter: 'startDate' },
     validationMessages: { required: 'Password is required.', isDateAfter: 'End Date must be after Start Date' },
   }),
+  formElementHelper({
+    cols: {
+      md: 6,
+    },
+    name: 'isInstructor',
+    label: 'Is Instructor',
+    inputType: 'checkbox',
+    checked: true,
+    value: 'is-instructor',
+    labelPlacement: 'end'
+  }),
 ]);

@@ -35,6 +35,16 @@ export interface Element {
   col?: boolean | GridSize;
   cols?: Partial<Record<Breakpoint, boolean | GridSize>>;
   fullWidth?: boolean;
+  disabled?: boolean;
+}
+
+export interface CheckboxElement extends Element {
+  checked?: boolean;
+  defaultChecked?: boolean;
+  inputProps?: object;
+  onChange: OnChangeType;
+  value: string;
+  labelPlacement?: 'end' | 'start' | 'top' | 'bottom';
 }
 
 export interface PickerElement extends Element {

@@ -6,6 +6,7 @@ import { TimePicker, DatePicker } from '@material-ui/pickers';
 
 import { ColorPicker } from './ColorPicker';
 import { PickerElement, Element } from '../models';
+import { FormControlLabel, Checkbox } from '@material-ui/core';
 
 interface InputProps extends Element {
   variant?: any;
@@ -51,6 +52,18 @@ export const Input: React.FC<InputProps | ColorPickerProps> = ({
           <div>
             <TimePicker todayLabel="now" onChange={onChange} {...extraProps} />
           </div>
+        );
+      case 'checkbox':
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { fullWidth, error, label, labelPlacement, ...checkboxProps } = extraProps;
+        return (
+          <FormControlLabel
+            control={
+              <Checkbox onChange={onChange} {...checkboxProps} />
+            }
+            labelPlacement={labelPlacement}
+            label={label}
+          />
         );
       case 'datePicker':
         return <DatePicker animateYearScrolling={false} onChange={onChange} {...extraProps} />;

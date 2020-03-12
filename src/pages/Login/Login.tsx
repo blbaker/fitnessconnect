@@ -9,7 +9,6 @@ import { useMst } from '../../core/stores/RootStore';
 import { RequestStatus } from '../../libs/helpers';
 import Form from '../../components/Form/Form';
 import { loginFormSchema } from './login-form-schema';
-import { getElementByName } from '../../components/Form/helpers/getElementByName';
 import { SignInError } from '../../models';
 import { LoadingButton } from '../../components/LoadingButton/LoadingButton';
 
@@ -50,10 +49,10 @@ export const Login: React.FC<LoginProps> = observer(() => {
   const [form, setForm] = useState(loginFormSchema);
   const [loginError, setLoginError] = useState('');
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (formData) => {
     try {
-      const emailAddress = getElementByName(form.elements, 'email-address').value;
-      const password = getElementByName(form.elements, 'password').value;
+      const emailAddress = formData['email-address'];
+      const password = formData['password'];
       await authStore.loginWithEmail(emailAddress, password);
       navigationStore.push('/classes');
     } catch (error) {

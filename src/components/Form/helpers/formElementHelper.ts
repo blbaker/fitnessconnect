@@ -1,4 +1,4 @@
-import { Element, PickerElement } from '../models';
+import { Element, PickerElement, CheckboxElement } from '../models';
 
 export const formElementHelper = ({
   fullWidth = true,
@@ -10,11 +10,7 @@ export const formElementHelper = ({
   validationMessages = {},
   value = '',
   ...other
-}): Element | PickerElement => {
-  let cleanValue: any = value;
-  if (inputType === 'datePicker' && cleanValue === '') {
-    cleanValue = new Date();
-  }
+}): Element | PickerElement | CheckboxElement => {
   return {
     fullWidth,
     inputType,
@@ -25,7 +21,15 @@ export const formElementHelper = ({
     valid: false,
     validation,
     validationMessages,
-    value: cleanValue,
+    value: cleanValue(value, inputType),
     ...other,
   };
+};
+
+const cleanValue = (value: any, inputType: string) => {
+  let cleanValue: any = value;
+  if (inputType === 'datePicker' && cleanValue === '') {
+    cleanValue = new Date();
+  }
+  return cleanValue;
 };
