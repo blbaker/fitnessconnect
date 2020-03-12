@@ -58,4 +58,27 @@ export const loginFormSchema: FormSchema = formHelper([
     value: 'is-instructor',
     labelPlacement: 'end'
   }),
+  formElementHelper({
+    cols: {
+      md: 6,
+    },
+    name: 'fruit',
+    label: 'Fruit',
+    inputType: 'select',
+    value: 'apple',
+    options: [
+      {
+        value: 'orange',
+        label: 'Orange'
+      },
+      {
+        value: 'apple',
+        label: 'Apple'
+      },
+      {
+        value: 'banana',
+        label: 'Banana'
+      }
+    ]
+  }),
 ]);

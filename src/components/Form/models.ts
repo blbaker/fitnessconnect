@@ -3,6 +3,11 @@ import { GridSize } from '@material-ui/core/Grid';
 
 type FieldName = string;
 
+export interface SelectOption {
+  label: string;
+  value: string;
+}
+
 export interface Validator {
   required?: boolean;
   isEmail?: boolean;
@@ -45,6 +50,10 @@ export interface CheckboxElement extends Element {
   onChange: OnChangeType;
   value: string;
   labelPlacement?: 'end' | 'start' | 'top' | 'bottom';
+}
+
+export interface SelectElement extends Element {
+  options: SelectOption[] | string[]
 }
 
 export interface PickerElement extends Element {

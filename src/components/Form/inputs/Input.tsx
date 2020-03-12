@@ -5,7 +5,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import { TimePicker, DatePicker } from '@material-ui/pickers';
 
 import { ColorPicker } from './ColorPicker';
-import { PickerElement, Element } from '../models';
+import { PickerElement, Element, SelectOption } from '../models';
 import { FormControlLabel, Checkbox } from '@material-ui/core';
 
 interface InputProps extends Element {
@@ -38,9 +38,9 @@ export const Input: React.FC<InputProps | ColorPickerProps> = ({
       case 'select':
         return (
           <TextField select onChange={onChange} {...extraProps}>
-            {extraProps.options.map((option: string) => (
-              <MenuItem key={option.toLowerCase()} value={option.toLowerCase()}>
-                {option.charAt(0).toUpperCase() + option.slice(1)}
+            {extraProps.options.map((option: SelectOption) => (
+              <MenuItem key={option.value.toLowerCase()} value={option.value.toLowerCase()}>
+                {option.label}
               </MenuItem>
             ))}
           </TextField>
