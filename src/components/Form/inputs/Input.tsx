@@ -22,7 +22,6 @@ export const Input: React.FC<InputProps | ColorPickerProps> = ({
   inputType,
   onChange = () => {},
   show = true,
-  style = {},
   touched = true,
   valid = true,
   validation = {},
@@ -30,7 +29,6 @@ export const Input: React.FC<InputProps | ColorPickerProps> = ({
   ...extraProps
 }) => {
   extraProps.error = !valid && !!validation && touched;
-  extraProps.style = style;
 
   const getInput = (inputType: string) => {
     switch (inputType) {

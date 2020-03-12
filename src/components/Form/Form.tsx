@@ -29,7 +29,6 @@ export const Form: React.FC<FormProps> = ({
   onSubmit,
   onChange,
   schema,
-  values,
   style,
 }) => {
   const classes = useStyles({});
@@ -51,8 +50,8 @@ export const Form: React.FC<FormProps> = ({
 
     updatedElements = updatedElements.map((item: Element | PickerElement) => ({
       ...item,
-      valid: checkValidity(item.value, item.validation),
-      errors: checkForErrors(item.value, item.validation),
+      valid: checkValidity(updatedElements, item),
+      errors: checkForErrors(updatedElements, item),
     }));
 
     let formIsValid = updatedElements.every((item: Element | PickerElement) =>
@@ -85,7 +84,6 @@ export const Form: React.FC<FormProps> = ({
                 style={style}
                 onChange={onFormChange(element.name)}
                 {...element}
-                value={values ? values[element.name] : undefined}
               />
             </Grid>
           ))}

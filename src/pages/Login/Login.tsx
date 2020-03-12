@@ -3,15 +3,15 @@ import { observer } from 'mobx-react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Alert from '@material-ui/lab/Alert';
+import { useTranslation } from 'react-i18next';
 
 import { useMst } from '../../core/stores/RootStore';
 import { RequestStatus } from '../../libs/helpers';
 import Form from '../../components/Form/Form';
 import { loginFormSchema } from './login-form-schema';
 import { getElementByName } from '../../components/Form/helpers/getElementByName';
-import LoadingButton from '../../components/LoadingButton/LoadingButton';
 import { SignInError } from '../../models';
-import { useTranslation } from 'react-i18next';
+import { LoadingButton } from '../../components/LoadingButton/LoadingButton';
 
 /* eslint-disable-next-line */
 export interface LoginProps {}

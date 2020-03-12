@@ -1,6 +1,10 @@
-import { Validator } from '../models';
+import { PickerElement, Element } from '../models';
+import { find } from 'underscore';
+import { isDate, isAfter, isBefore } from 'date-fns';
 
-export const checkValidity = (value: string = '', rules?: Validator) => {
+export const checkValidity = (form: (Element | PickerElement)[], item: Element | PickerElement) => {
+  const { value = '', validation: rules } = item;
+
   let isValid = true;
   if (!rules) {
     return true;
@@ -32,5 +36,29 @@ export const checkValidity = (value: string = '', rules?: Validator) => {
     isValid = pattern.test(value) && isValid;
   }
 
+  if (rules.isDateAfter) {
+    const field = find(form, field => field.name === item.name);
+    const comparingField = find(form, field => field.name === rules.isDateAfter);
+
+    if (isDate(field.value)) {
+      const startDate = new Date(field.value);
+      const endDate = new Date(comparingField.value);
+
+      isValid = isAfter(startDate, endDate);
+    }
+  }
+
+  if (rules.isDateBefore) {
+    const field = find(form, field => field.name === item.name);
+    const comparingField = find(form, field => field.name === rules.isDateBefore);
+
+    if (isDate(field.value)) {
+      const startDate = new Date(field.value);
+      const endDate = new Date(comparingField.value);
+
+      isValid = isBefore(startDate, endDate);
+    }
+  }
+  
   return isValid;
 };

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-import { Route as IRoute, NotFoundRoute } from './routes';
+import { Route as IRoute } from './models';
 import BlankLayout from './BlankLayout';
 
-export const PublicRoute = (route: IRoute | NotFoundRoute) => {
+export const PublicRoute = (route: IRoute) => {
   const Layout = route.layout || BlankLayout;
   return (
     <Route

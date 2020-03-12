@@ -1,6 +1,8 @@
 import { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
 import { GridSize } from '@material-ui/core/Grid';
 
+type FieldName = string;
+
 export interface Validator {
   required?: boolean;
   isEmail?: boolean;
@@ -8,6 +10,8 @@ export interface Validator {
   maxLength?: number;
   isNumeric?: boolean;
   regex?: RegExp;
+  isDateAfter?: FieldName;
+  isDateBefore?: FieldName;
 }
 
 export type OnChangeType = (
@@ -25,7 +29,7 @@ export interface Element {
   show?: boolean;
   validation?: Validator;
   validationMessages?: ValidationMessage;
-  value: string;
+  value: any;
   valid: boolean;
   touched: boolean;
   col?: boolean | GridSize;

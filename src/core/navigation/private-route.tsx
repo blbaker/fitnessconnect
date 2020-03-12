@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
 import BlankLayout from './BlankLayout';
-import { Route as IRoute } from './routes';
+import { Route as IRoute } from './models';
 
 export const PrivateRoute = (route: IRoute) => {
   const Layout = route.layout || BlankLayout;

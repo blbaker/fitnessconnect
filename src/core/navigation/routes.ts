@@ -1,6 +1,3 @@
-import React from 'react';
-import history from 'history';
-
 import Home from '../../pages/Home/Home';
 import Login from '../../pages/Login/Login';
 import Class from '../../pages/Classes/Class/Class';
@@ -9,25 +6,9 @@ import NotFound from '../../pages/NotFound/NotFound';
 import { AuthStore } from '../stores/store.types';
 import PrivateLayout from '../../components/PrivateLayout/PrivateLayout';
 import PublicLayout from '../../components/PublicLayout/PublicLayout';
+import { Route } from './models';
 
-export interface BaseRoute {
-  component: React.FC<any>;
-  layout?: string | React.FC<any> | React.ComponentClass<any, any>;
-  name?: string;
-  exact?: boolean;
-  path?: string;
-  redirectTo?: string;
-}
-
-export interface NotFoundRoute extends BaseRoute {}
-
-export interface Route extends BaseRoute {
-  canActivate?: boolean;
-  failurePath?: history.LocationDescriptor;
-  routes?: (Route | NotFoundRoute)[];
-}
-
-export const routesSchema = (authStore: AuthStore): (Route | NotFoundRoute)[] => [
+export const routesSchema = (authStore: AuthStore): Route[] => [
   {
     name: 'Login',
     path: '/login',
