@@ -12,7 +12,6 @@ export const formElementHelper = ({
   ...other
 }): Element | PickerElement => {
   let cleanValue: any = value;
-  console.log(value, cleanValue, inputType);
   if (inputType === 'datePicker' && cleanValue === '') {
     cleanValue = new Date();
   }
