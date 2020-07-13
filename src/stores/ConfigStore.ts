@@ -1,10 +1,10 @@
 import { types, getEnv, getRoot, flow, applySnapshot, getSnapshot } from 'mobx-state-tree';
 import q from 'q';
 
-import { RequestStatusModel, RequestStatus } from '../../libs/helpers';
-import { MobxEnvironment } from '../core/../mobx-environment';
+import { RequestStatusModel, RequestStatus } from '../libs/helpers';
+import { Environment } from '../core/environment';
 import { RootStore } from './store.types';
-import { GetTranslationsResult } from '../../models';
+import { GetTranslationsResult } from '../models';
 
 export const ConfigStoreModel = types
   .model({
@@ -17,9 +17,9 @@ export const ConfigStoreModel = types
     fallbackLanguages: types.optional(types.array(types.string), ['en-WLD']),
     enabledFeatures: types.map(types.frozen()),
   })
-  .views(self => ({
+  .views((self) => ({
     get environment() {
-      return getEnv(self) as MobxEnvironment;
+      return getEnv(self) as Environment;
     },
     get rootStore(): RootStore {
       return getRoot(self);
@@ -31,14 +31,14 @@ export const ConfigStoreModel = types
       return getSnapshot(self.enabledFeatures);
     },
   }))
-  .actions(self => ({
+  .actions((self) => ({
     setStatus(value: RequestStatus) {
       self.status = value;
     },
     setCurrentLanguage(language: string) {
       self.currentLanguage = language;
     },
-    loadTranslations: flow(function*() {
+    loadTranslations: flow(function* () {
       const translations: GetTranslationsResult = yield self.environment.configApi.getTranslations();
       if (translations.kind === 'ok') {
         Object.keys(translations.data).forEach((languageKey: string) => {
@@ -52,7 +52,7 @@ export const ConfigStoreModel = types
         return {};
       }
     }),
-    loadEnabledFeatures: flow(function*() {
+    loadEnabledFeatures: flow(function* () {
       // TODO Load this from the backend
       yield new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -65,16 +65,16 @@ export const ConfigStoreModel = types
       });
     }),
   }))
-  .actions(self => ({
-    load: flow(function*() {
+  .actions((self) => ({
+    load: flow(function* () {
       self.setStatus(RequestStatus.PENDING);
-      yield q.all([self.loadTranslations(), self.loadEnabledFeatures()]).spread(translations => {
+      yield q.all([self.loadTranslations(), self.loadEnabledFeatures()]).spread((translations) => {
         applySnapshot(self.allTranslations, translations);
       });
       self.setStatus(RequestStatus.DONE);
     }),
   }))
-  .actions(self => ({
+  .actions((self) => ({
     afterCreate: () => {
       self.load();
     },

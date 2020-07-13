@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Alert from '@material-ui/lab/Alert';
 import { useTranslation } from 'react-i18next';
 
-import { useMst } from '../../core/stores/RootStore';
+import { useMst } from '../../stores/RootStore';
 import { RequestStatus } from '../../libs/helpers';
 import Form from '../../components/Form/Form';
 import { loginFormSchema } from './login-form-schema';
@@ -20,7 +20,7 @@ export interface FormInputErrors {
   password?: string;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -63,7 +63,7 @@ export const Login: React.FC<LoginProps> = observer(() => {
     authStore.setStatus(RequestStatus.IDLE);
   };
 
-  const handleFormChange = formState => {
+  const handleFormChange = (formState) => {
     setForm(formState);
   };
 

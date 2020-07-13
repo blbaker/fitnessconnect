@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { setupRootStore } from '../../core/setup-mobx';
-import { Provider } from '../../core/stores';
+import { Provider } from '../../stores';
 import PrivateLayout from './PrivateLayout';
 import { Router } from 'react-router';
 

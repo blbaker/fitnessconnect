@@ -2,17 +2,13 @@ import makeInspectable from 'mobx-devtools-mst';
 import { onSnapshot } from 'mobx-state-tree';
 import { createBrowserHistory } from 'history';
 
-import { Api, AuthApi, UserApi, ConfigApi } from '../api';
-import { MobxEnvironment } from './mobx-environment';
+import { Api, AuthApi, UserApi, ConfigApi, MetadataApi } from '../api';
+import { Environment } from './environment';
 import { loadString, load, save } from '../libs/storage';
-import { RootStoreModel } from '../core/stores/RootStore';
-import { RootStore } from '../core/stores/store.types';
-import {
-  ROOT_STATE_STORAGE_KEY,
-  ACCESS_TOKEN_KEY,
-  cleanUpWhenUnauthorized,
-} from './mobx-constants';
-import { syncHistoryWithStore } from './stores';
+import { RootStoreModel } from '../stores/RootStore';
+import { RootStore } from '../stores/store.types';
+import { ROOT_STATE_STORAGE_KEY, ACCESS_TOKEN_KEY, cleanUpWhenUnauthorized } from './constants';
+import { syncHistoryWithStore } from '../stores';
 
 export type GetRootStore = () => RootStore;
 
@@ -23,7 +19,7 @@ export function setupRootStore(): { rootStore: RootStore; history: any } {
   let rootStore: RootStore;
 
   // Prepare the environment that will be associated with the RootStore.
-  const mobxEnvironment = createMobxEnvironment();
+  const mobxEnvironment = createEnvironment();
 
   try {
     /**
@@ -44,12 +40,12 @@ export function setupRootStore(): { rootStore: RootStore; history: any } {
   }
 
   makeInspectable(rootStore);
-  mobxEnvironment.api.addResponseTransform(response =>
+  mobxEnvironment.api.addResponseTransform((response) =>
     cleanUpWhenUnauthorized(response, rootStore),
   );
 
   // track changes & save to storage
-  onSnapshot(rootStore, snapshot => save(ROOT_STATE_STORAGE_KEY, snapshot));
+  onSnapshot(rootStore, (snapshot) => save(ROOT_STATE_STORAGE_KEY, snapshot));
 
   // Hook up router model to browser history object
   const history = syncHistoryWithStore(createBrowserHistory(), rootStore.navigationStore);
@@ -64,24 +60,25 @@ export function setupRootStore(): { rootStore: RootStore; history: any } {
  * of the models that get created later. This is how we loosly couple things
  * like events between models.
  */
-function createMobxEnvironment() {
-  const mobxEnvironment = new MobxEnvironment();
+function createEnvironment() {
+  const environment = new Environment();
 
   // Create each API service
-  mobxEnvironment.api = new Api();
-  mobxEnvironment.authApi = new AuthApi();
-  mobxEnvironment.userApi = new UserApi();
-  mobxEnvironment.configApi = new ConfigApi();
+  environment.api = new Api();
+  environment.authApi = new AuthApi();
+  environment.userApi = new UserApi();
+  environment.configApi = new ConfigApi();
+  environment.metadataApi = new MetadataApi();
 
   try {
     // Load accessToken from storage
     const accessToken = loadString(ACCESS_TOKEN_KEY) || null;
 
     // Allow each service to setup
-    mobxEnvironment.api.setup(accessToken);
+    environment.api.setup(accessToken);
   } catch (error) {
     console.error(error);
   }
 
-  return mobxEnvironment;
+  return environment;
 }

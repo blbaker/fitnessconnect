@@ -5,7 +5,7 @@ import i18n from '../../core/i18n';
 import Classes from './Classes';
 import { I18nextProvider } from 'react-i18next';
 
-jest.mock('../../core/stores/RootStore');
+jest.mock('../../stores/RootStore');
 
 describe(' Classes', () => {
   it('should render successfully', () => {

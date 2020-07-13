@@ -1,4 +1,10 @@
-import { RootStoreModel, AuthStoreModel, ConfigStoreModel, NavigationStoreModel } from './';
+import {
+  RootStoreModel,
+  AuthStoreModel,
+  ConfigStoreModel,
+  NavigationStoreModel,
+  MetadataStoreModel,
+} from './';
 
 type RootStoreType = typeof RootStoreModel.Type;
 export interface RootStore extends RootStoreType {}
@@ -19,3 +25,8 @@ type NavigationStoreType = typeof NavigationStoreModel.Type;
 export interface NavigationStore extends NavigationStoreType {}
 type NavigationStoreSnapshotType = typeof NavigationStoreModel.SnapshotType;
 export interface NavigationStoreSnapshot extends NavigationStoreSnapshotType {}
+
+type MetadataStoreType = typeof MetadataStoreModel.Type;
+export interface MetadataStore extends MetadataStoreType {}
+type MetadataStoreSnapshotType = typeof MetadataStoreModel.SnapshotType;
+export interface MetadataStoreSnapshot extends MetadataStoreSnapshotType {}

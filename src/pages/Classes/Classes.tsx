@@ -3,14 +3,14 @@ import { observer } from 'mobx-react';
 import { useTranslation } from 'react-i18next';
 
 import './Classes.scss';
-import { useMst } from '../../core/stores';
+import { useMst } from '../../stores';
 import CyberobicsWidget from '../../components/CyberobicsWidget/CyberobicsWidget';
 import Grid from '@material-ui/core/Grid';
 
 /* eslint-disable-next-line */
 export interface ClassesProps {}
 
-export const Classes: React.FC<ClassesProps> = observer(props => {
+export const Classes: React.FC<ClassesProps> = observer((props) => {
   const { t } = useTranslation();
   const { configStore } = useMst();
 

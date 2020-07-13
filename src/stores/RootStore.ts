@@ -1,10 +1,16 @@
 import { types, getEnv, applySnapshot, Instance, getRoot } from 'mobx-state-tree';
 import { createContext, useContext } from 'react';
 
-import { clear } from '../../libs/storage';
-import { MobxEnvironment } from '../../core/mobx-environment';
-import { ROOT_STATE_STORAGE_KEY, ACCESS_TOKEN_KEY } from '../../core/mobx-constants';
-import { AuthStoreModel, ConfigStoreModel, NavigationStoreModel, UserStoreModel } from './';
+import { clear } from '../libs/storage';
+import { Environment } from '../core/environment';
+import { ROOT_STATE_STORAGE_KEY, ACCESS_TOKEN_KEY } from '../core/constants';
+import {
+  AuthStoreModel,
+  ConfigStoreModel,
+  NavigationStoreModel,
+  UserStoreModel,
+  MetadataStoreModel,
+} from './';
 
 const userRelatedStores = ['userStore', 'authStore'];
 
@@ -15,16 +21,17 @@ export const RootStoreModel = types
     authStore: types.optional(AuthStoreModel, {}),
     configStore: types.optional(ConfigStoreModel, {}),
     navigationStore: types.optional(NavigationStoreModel, {}),
+    metadataStore: types.optional(MetadataStoreModel, {}),
   })
-  .views(self => ({
+  .views((self) => ({
     get environment() {
-      return getEnv(self) as MobxEnvironment;
+      return getEnv(self) as Environment;
     },
     get rootStore() {
       return getRoot(self);
     },
   }))
-  .actions(self => ({
+  .actions((self) => ({
     reset: () => {
       clear([ACCESS_TOKEN_KEY, ROOT_STATE_STORAGE_KEY]);
       self.environment.api.destroy();
@@ -33,7 +40,7 @@ export const RootStoreModel = types
     logout: () => {
       clear([ACCESS_TOKEN_KEY, ROOT_STATE_STORAGE_KEY]);
       self.environment.api.destroy();
-      userRelatedStores.forEach(store => {
+      userRelatedStores.forEach((store) => {
         applySnapshot(self[store], {});
       });
     },

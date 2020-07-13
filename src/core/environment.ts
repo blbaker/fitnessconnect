@@ -1,10 +1,10 @@
-import { Api, AuthApi, UserApi, ConfigApi } from '../api';
+import { Api, AuthApi, UserApi, ConfigApi, MetadataApi } from '../api';
 
 /**
  * The environment is a place where services and shared dependencies between
  * models live.  They are made available to every model via dependency injection.
  */
-export class MobxEnvironment {
+export class Environment {
   /**
    * Our apis
    */
@@ -12,4 +12,5 @@ export class MobxEnvironment {
   authApi: AuthApi;
   userApi: UserApi;
   configApi: ConfigApi;
+  metadataApi: MetadataApi;
 }

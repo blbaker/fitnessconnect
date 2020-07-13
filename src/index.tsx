@@ -5,7 +5,7 @@ import { Router } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { Provider } from './core/stores/RootStore';
+import { Provider } from './stores/RootStore';
 import { setupRootStore } from './core/setup-mobx';
 
 const { rootStore, history } = setupRootStore();

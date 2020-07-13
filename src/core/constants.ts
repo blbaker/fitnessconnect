@@ -1,4 +1,4 @@
-import { RootStore } from '../core/stores/store.types';
+import { RootStore } from '../stores/store.types';
 
 /**
  * The key we'll be saving our state within local storage.

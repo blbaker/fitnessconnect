@@ -1,7 +1,7 @@
 import { types, getEnv, flow, applySnapshot } from 'mobx-state-tree';
-import { RequestStatusModel, RequestStatus } from '../../libs/helpers';
-import { MobxEnvironment } from '../../core/mobx-environment';
-import { GetMeResult } from '../../models';
+import { RequestStatusModel, RequestStatus } from '../libs/helpers';
+import { Environment } from '../core/environment';
+import { GetMeResult } from '../models';
 
 const UserProfile = types.model({
   firstName: types.string,
@@ -44,21 +44,21 @@ export const UserStoreModel = types
     lastName: types.maybeNull(types.string),
     email: types.optional(types.string, ''),
   })
-  .views(self => ({
+  .views((self) => ({
     get environment() {
-      return getEnv(self) as MobxEnvironment;
+      return getEnv(self) as Environment;
     },
     get getUser() {
       return self;
     },
   }))
-  .actions(self => ({
+  .actions((self) => ({
     setStatus(value: RequestStatus) {
       self.status = value;
     },
   }))
-  .actions(self => ({
-    updateUser: flow(function*() {
+  .actions((self) => ({
+    updateUser: flow(function* () {
       try {
         const response: GetMeResult = yield self.environment.userApi.getMe();
         if (response.kind === 'ok') {

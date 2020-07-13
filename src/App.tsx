@@ -3,7 +3,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import './App.css';
-import { useMst } from './core/stores/RootStore';
+import { useMst } from './stores/RootStore';
 import i18n from './core/i18n';
 import { defaultTheme } from './theme';
 import Root from './components/Root/Root';
@@ -18,7 +18,7 @@ const App: React.FC = () => {
     });
 
     const translations = configStore.translations;
-    Object.keys(translations).forEach(language => {
+    Object.keys(translations).forEach((language) => {
       i18n.addResourceBundle(language, 'translation', translations[language], true, true);
     });
     return;

@@ -3,7 +3,7 @@ import Login from '../../pages/Login/Login';
 import Class from '../../pages/Classes/Class/Class';
 import Classes from '../../pages/Classes/Classes';
 import NotFound from '../../pages/NotFound/NotFound';
-import { AuthStore } from '../stores/store.types';
+import { AuthStore } from '../../stores/store.types';
 import PrivateLayout from '../../components/PrivateLayout/PrivateLayout';
 import PublicLayout from '../../components/PublicLayout/PublicLayout';
 import { Route } from './models';
@@ -38,7 +38,8 @@ export const routesSchema = (authStore: AuthStore): Route[] => [
     path: '/',
     component: Home,
     exact: true,
-    redirectTo: authStore.isLoggedIn ? '/classes' : '/login',
+    redirectTo: authStore.isLoggedIn ? '/account' : null,
+    layout: PublicLayout,
   },
   {
     name: '404',

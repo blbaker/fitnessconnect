@@ -8,9 +8,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 
 import './PublicLayout.scss';
-import { useMst } from '../../core/stores/RootStore';
+import { useMst } from '../../stores/RootStore';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   button: {},
 }));
 
-export const PublicLayout: React.FC = observer(props => {
+export const PublicLayout: React.FC = observer((props) => {
   const theme = useTheme();
   const classes = useStyles(theme);
   const { authStore } = useMst();
@@ -36,7 +36,7 @@ export const PublicLayout: React.FC = observer(props => {
       <AppBar position="fixed">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            @Cycle
+            FitnessConnect
           </Typography>
           {authStore.isLoggedIn && (
             <Button variant="contained" className={classes.button} onClick={handleLogout}>
