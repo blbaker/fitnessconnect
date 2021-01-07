@@ -1,4 +1,4 @@
-import { Api, AuthApi, UserApi, ConfigApi, MetadataApi } from '../api';
+import { Api, AuthApi, UserApi, ConfigApi, MetadataApi, ServiceApi, StripeApi } from '../api';
 
 /**
  * The environment is a place where services and shared dependencies between
@@ -10,7 +10,9 @@ export class Environment {
    */
   api: Api;
   authApi: AuthApi;
-  userApi: UserApi;
   configApi: ConfigApi;
   metadataApi: MetadataApi;
+  serviceApi: ServiceApi;
+  userApi: UserApi;
+  stripeApi: StripeApi;
 }

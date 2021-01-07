@@ -2,10 +2,35 @@ import { createMuiTheme, Theme } from '@material-ui/core/styles';
 import { breakpoints } from './breakpoints';
 import { color } from './color';
 import { palette } from './palette';
+import { fontSize } from './typography';
 
 export const defaultTheme: Theme = createMuiTheme({
   breakpoints: {
     values: breakpoints,
+  },
+  typography: {
+    fontFamily: `'Apertura', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue'`,
+    fontWeightBold: 700,
+    fontSize: fontSize.default,
+    h1: {
+      fontSize: fontSize.h1,
+    },
+    h2: {
+      fontSize: fontSize.h2,
+    },
+    h3: {
+      fontSize: fontSize.h3,
+    },
+    h4: {
+      fontSize: fontSize.h4,
+    },
+    h5: {
+      fontSize: fontSize.h5,
+    },
+    body1: {
+      fontSize: fontSize.default,
+    },
   },
   palette: {
     primary: {
@@ -41,12 +66,15 @@ export const defaultTheme: Theme = createMuiTheme({
       primary: color.bodyColor,
     },
     background: {
-      default: palette.gray200,
+      default: palette.white,
     },
   },
   props: {
     MuiGrid: {
       xs: 12,
+    },
+    MuiTextField: {
+      variant: 'filled',
     },
   },
 });

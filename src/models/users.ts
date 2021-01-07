@@ -1,30 +1,22 @@
 import { GeneralApiProblem } from './api';
+import { JwtToken } from './service';
 
 export interface UserProfile {
-  birthdate: string;
-  createdAt?: string;
-  email: string;
-  firstName: string;
-  gender: string;
-  height: number;
-  id?: string;
-  lastName: string;
-  location: string;
-  updatedAt?: string;
-  username: string;
-  watchedTutorials: number;
-  weight: number;
+  user_email: string;
+  user_first_name: string;
+  stripe_customer_id?: string;
 }
 
 export interface User {
   id: string;
-  firstName: string;
+  user_first_name: string;
   lastName: string;
-  email: string;
+  user_email: string;
   createdAt: string;
   updatedAt: string;
   profile: UserProfile;
   termsAndConditions: TermsAndCondition[];
+  stripe_customer_id?: string;
 }
 
 export interface TermsAndCondition {
@@ -33,7 +25,7 @@ export interface TermsAndCondition {
   updatedAt?: string;
 }
 
-export type SaveUserProfileResponse = UserProfile | null;
+export type SaveUserProfileResponse = JwtToken | null;
 export type SaveUserProfileResult =
   | { kind: 'ok'; data: SaveUserProfileResponse }
   | GeneralApiProblem;

@@ -48,7 +48,7 @@ export class UserApi extends Api {
 
     // make the api call
     const response: ApiResponse<SaveUserProfileResponse> = camelizeKeys(
-      await Api.apisauce.post('/me/profile', data),
+      await Api.apisauce.post('/account/profile', data),
     );
 
     // the typical ways to die when calling an api
@@ -73,7 +73,7 @@ export class UserApi extends Api {
 
     // make the api call
     const response: ApiResponse<SaveUserProfileResponse> = camelizeKeys(
-      await Api.apisauce.put('/me/profile', data),
+      await Api.apisauce.put('/account/profile', data),
     );
 
     // the typical ways to die when calling an api

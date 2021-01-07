@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 
 import './PublicLayout.scss';
 import { useMst } from '../../stores/RootStore';
+import GoogleLogin from 'react-google-login';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 export const PublicLayout: React.FC = observer((props) => {
   const theme = useTheme();
   const classes = useStyles(theme);
-  const { authStore } = useMst();
+  const { authStore, navigationStore } = useMst();
   const handleLogout = () => {
     authStore.logout();
   };
@@ -44,9 +45,7 @@ export const PublicLayout: React.FC = observer((props) => {
             </Button>
           )}
           {!authStore.isLoggedIn && (
-            <Button variant="contained" component={Link} to="/login">
-              Login
-            </Button>
+            <Button onClick={() => navigationStore.push('/login')}>Login</Button>
           )}
         </Toolbar>
       </AppBar>

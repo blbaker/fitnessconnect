@@ -16,3 +16,6 @@ export const RequestStatusModel = types.optional(
   ]),
   RequestStatus.IDLE,
 );
+
+export * from './addCommasToNumber';
+export { default as addCommasToNumber } from './addCommasToNumber';

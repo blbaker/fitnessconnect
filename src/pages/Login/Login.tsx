@@ -1,24 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Alert from '@material-ui/lab/Alert';
-import { useTranslation } from 'react-i18next';
+import Typography from '@material-ui/core/Typography';
+import { useLocation } from 'react-router';
 
+import ProfileForm from '../../components/ProfileForm/ProfileForm';
 import { useMst } from '../../stores/RootStore';
-import { RequestStatus } from '../../libs/helpers';
-import Form from '../../components/Form/Form';
-import { loginFormSchema } from './login-form-schema';
-import { SignInError } from '../../models';
-import { LoadingButton } from '../../components/LoadingButton/LoadingButton';
+import { SignUpStatus } from '../../stores';
 
 /* eslint-disable-next-line */
 export interface LoginProps {}
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 export interface FormInputErrors {
   emailAddress?: string;
   password?: string;
 }
+
+type QueryStrings = {
+  code: string;
+};
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -42,50 +46,56 @@ const useStyles = makeStyles((theme) => ({
 export const Login: React.FC<LoginProps> = observer(() => {
   const theme = useTheme();
   const classes = useStyles(theme);
+  const [state, setState] = useState();
+  const query = useQuery();
+  const { userStore, authStore, navigationStore } = useMst();
 
-  const { t } = useTranslation();
-  const { authStore, navigationStore } = useMst();
+  useEffect(() => {
+    if (userStore.signUpStatus === SignUpStatus.NEEDS_FITBIT) {
+      const loginWithFitbit = async () => {
+        const service = query.get('service');
+        const code = query.get('code');
+        if (!code) {
+          const url = await authStore.getAuthorizationUrl('fitbit');
+          console.log('url', url);
+          window.location.href = url;
+        } else if (code && service) {
+          authStore.loginWithService(service, code);
+        }
+      };
 
-  const [form, setForm] = useState(loginFormSchema);
-  const [loginError, setLoginError] = useState('');
+      loginWithFitbit();
+    } else if (userStore.signUpStatus === SignUpStatus.NEEDS_FIT) {
+      const loginWithFit = async () => {
+        const code = query.get('code');
+        const service = query.get('service');
+        if (!code) {
+          const url = await authStore.getAuthorizationUrl('fit');
+          console.log('url', url);
+          window.location.href = url;
+        } else if (code && service) {
+          authStore.loginWithService(service, code);
+        }
+      };
 
-  const handleSubmit = async (formData) => {
-    try {
-      const emailAddress = formData['email-address'];
-      const password = formData['password'];
-      await authStore.loginWithEmail(emailAddress, password);
-      navigationStore.push('/classes');
-    } catch (error) {
-      const errorObj = JSON.parse(error.message);
-      const message = SignInError[errorObj.error.code];
-      setLoginError(message || errorObj.error?.message || errorObj.error);
+      loginWithFit();
+    } else if (userStore.signUpStatus === SignUpStatus.COMPLETED) {
+      navigationStore.push('/dashboard');
     }
-    authStore.setStatus(RequestStatus.IDLE);
-  };
-
-  const handleFormChange = (formState) => {
-    setForm(formState);
-  };
+  }, []);
 
   return (
     <>
-      {loginError && <Alert severity="error">{t(loginError)}</Alert>}
-      {!authStore.isLoggedIn ? (
-        <Paper className={classes.container}>
-          <Form onSubmit={handleSubmit} onChange={handleFormChange} schema={form}>
-            <LoadingButton
-              type="submit"
-              variant="contained"
-              loading={authStore.status === RequestStatus.PENDING}
-              disabled={authStore.status === RequestStatus.PENDING || !form.valid}
-              color="primary"
-            >
-              Submit
-            </LoadingButton>
-          </Form>
-        </Paper>
-      ) : (
-        <div>You're signed in</div>
+      {userStore.signUpStatus === SignUpStatus.NEEDS_PROFILE && (
+        <div className={classes.container}>
+          <Typography variant="h2">
+            What can we call you and where can we contact you if needed?
+          </Typography>
+          <p>
+            We won't give this contact to anyone and will only use it for essential communication.
+          </p>
+          <ProfileForm />
+        </div>
       )}
     </>
   );

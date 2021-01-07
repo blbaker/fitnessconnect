@@ -68,7 +68,7 @@ export const Home: React.FC<HomeProps> = (props) => {
   const classes = useStyles();
   const { metadataStore } = useMst();
   useEffect(() => {
-    metadataStore.getTotalSteps();
+    // metadataStore.getTotalSteps();
   }, [metadataStore]);
   const intToString = (value) => {
     const suffixes = ['', 'thousand', 'million', 'billion', 'trillion'];

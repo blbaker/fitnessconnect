@@ -1,4 +1,4 @@
-import { Element, PickerElement, CheckboxElement } from '../models';
+import { BaseElement, PickerElement, CheckboxElement } from '../models';
 
 export const formElementHelper = ({
   fullWidth = true,
@@ -10,7 +10,7 @@ export const formElementHelper = ({
   validationMessages = {},
   value = '',
   ...other
-}): Element | PickerElement | CheckboxElement => {
+}): BaseElement | PickerElement | CheckboxElement => {
   return {
     fullWidth,
     inputType,

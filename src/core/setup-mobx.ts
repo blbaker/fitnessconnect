@@ -2,7 +2,7 @@ import makeInspectable from 'mobx-devtools-mst';
 import { onSnapshot } from 'mobx-state-tree';
 import { createBrowserHistory } from 'history';
 
-import { Api, AuthApi, UserApi, ConfigApi, MetadataApi } from '../api';
+import { Api, AuthApi, UserApi, ConfigApi, MetadataApi, ServiceApi, StripeApi } from '../api';
 import { Environment } from './environment';
 import { loadString, load, save } from '../libs/storage';
 import { RootStoreModel } from '../stores/RootStore';
@@ -66,9 +66,11 @@ function createEnvironment() {
   // Create each API service
   environment.api = new Api();
   environment.authApi = new AuthApi();
-  environment.userApi = new UserApi();
   environment.configApi = new ConfigApi();
   environment.metadataApi = new MetadataApi();
+  environment.serviceApi = new ServiceApi();
+  environment.stripeApi = new StripeApi();
+  environment.userApi = new UserApi();
 
   try {
     // Load accessToken from storage

@@ -1,14 +1,14 @@
-import { Element, PickerElement } from '../models';
+import { FormElement } from '../models';
 
 export const replaceInArray = (
-  array: (Element | PickerElement)[],
+  array: FormElement[],
   name: string,
   newValues: any,
-): (Element | PickerElement)[] => {
-  return array.map((item: Element | PickerElement) => {
+): FormElement[] => {
+  return array.map((item: FormElement) => {
     if (item.name === name) {
       return {
-        ...array.find(item => item.name === name),
+        ...array.find((item) => item.name === name),
         ...newValues,
       };
     }

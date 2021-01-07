@@ -25,6 +25,7 @@ export class Api {
       headers: {
         Accept: 'application/json',
       },
+      withCredentials: true,
     };
 
     if (!isNull(accessToken) && !isUndefined(accessToken)) {
@@ -41,7 +42,7 @@ export class Api {
   }
 
   addResponseTransform(transformation: ResponseTransform) {
-    Api.apisauce.addResponseTransform(response => {
+    Api.apisauce.addResponseTransform((response) => {
       transformation(response);
     });
   }

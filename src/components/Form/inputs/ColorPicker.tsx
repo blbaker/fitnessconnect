@@ -6,7 +6,7 @@ import { makeStyles, useTheme } from '@material-ui/core';
 interface ColorPickerProps {
   onChange: Function;
   styles?: any;
-  value?: Color;
+  value?: string | string[];
 }
 
 const useStyles = makeStyles(() => ({
@@ -66,7 +66,11 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({ onChange, styles, valu
       {show ? (
         <div className={classes.popover}>
           <div className={classes.wrapper} onClick={handleClose} />
-          <ChromePicker color={lastValidInput} disableAlpha onChange={onColorChange} />
+          <ChromePicker
+            color={Array.isArray(lastValidInput) ? lastValidInput[0] : lastValidInput}
+            disableAlpha
+            onChange={onColorChange}
+          />
         </div>
       ) : null}
     </div>

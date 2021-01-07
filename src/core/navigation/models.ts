@@ -9,8 +9,9 @@ export interface Route extends BaseRoute {
   layout?: string | React.FC<any> | React.ComponentClass<any, any>;
   name: string;
   path?: string;
-  redirectTo?: string;
+  redirectTo?: string | any;
   canActivate?: boolean;
   failurePath?: history.LocationDescriptor;
   routes?: Route[];
+  data?: { [key: string]: any };
 }

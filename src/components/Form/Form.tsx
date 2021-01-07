@@ -7,7 +7,7 @@ import { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
 
 import { replaceInArray, checkValidity, checkForErrors } from './helpers';
 import { Input } from './inputs/Input';
-import { FormSchema, PickerElement, Element, CheckboxElement } from './models';
+import { FormSchema, PickerElement, BaseElement, CheckboxElement } from './models';
 
 interface FormProps {
   children: React.ReactNode;
@@ -24,13 +24,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const Form: React.FC<FormProps> = ({
-  children,
-  onSubmit,
-  onChange,
-  schema,
-  style,
-}) => {
+export const Form: React.FC<FormProps> = ({ children, onSubmit, onChange, schema, style }) => {
   const classes = useStyles({});
 
   const onFormSubmit = (event) => {
@@ -42,8 +36,7 @@ export const Form: React.FC<FormProps> = ({
   const onFormChange = (name: string) => (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-
-    let updatedElements: (Element | PickerElement | CheckboxElement)[];
+    let updatedElements: (BaseElement | PickerElement | CheckboxElement)[];
     if (event.target && event.target.type === 'checkbox') {
       const checked = (event.target as HTMLInputElement).checked;
       updatedElements = replaceInArray(schema.elements, name, {
@@ -58,16 +51,18 @@ export const Form: React.FC<FormProps> = ({
       });
     }
 
-    updatedElements = updatedElements.map((item: Element | PickerElement | CheckboxElement) => ({
-      ...item,
-      valid: checkValidity(updatedElements, item),
-      errors: checkForErrors(updatedElements, item),
-    }));
+    updatedElements = updatedElements.map(
+      (item: BaseElement | PickerElement | CheckboxElement) => ({
+        ...item,
+        valid: checkValidity(updatedElements, item),
+        errors: checkForErrors(updatedElements, item),
+      }),
+    );
 
-    let formIsValid = updatedElements.every((item: Element | PickerElement | CheckboxElement) =>
+    let formIsValid = updatedElements.every((item: BaseElement | PickerElement | CheckboxElement) =>
       item.show ? item.valid : true,
     );
-    
+
     onChange({
       valid: formIsValid,
       elements: updatedElements,
@@ -75,7 +70,7 @@ export const Form: React.FC<FormProps> = ({
   };
 
   const calculateColumns = (
-    element: Element | PickerElement | CheckboxElement,
+    element: BaseElement | PickerElement | CheckboxElement,
   ): Partial<Record<Breakpoint, boolean | GridSize>> => {
     if (element.cols) {
       return element.cols;
@@ -88,13 +83,9 @@ export const Form: React.FC<FormProps> = ({
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <form className={classes.root} onSubmit={onFormSubmit}>
         <Grid container spacing={3}>
-          {schema.elements.map(element => (
+          {schema.elements.map((element) => (
             <Grid item key={element.name} {...calculateColumns(element)}>
-              <Input
-                style={style}
-                onChange={onFormChange(element.name)}
-                {...element}
-              />
+              <Input style={style} onChange={onFormChange(element.name)} {...element} />
             </Grid>
           ))}
         </Grid>

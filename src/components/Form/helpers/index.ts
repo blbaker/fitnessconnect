@@ -4,4 +4,4 @@ export * from './checkForErrors';
 export * from './formElementHelper';
 export * from './formHelper';
 export * from './getElementByName';
-export * from './formHelper';
+export * from './formValidity';

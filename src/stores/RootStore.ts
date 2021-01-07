@@ -10,18 +10,29 @@ import {
   NavigationStoreModel,
   UserStoreModel,
   MetadataStoreModel,
+  StripeStoreModel,
 } from './';
+import { RequestStatus } from '../libs/helpers';
 
 const userRelatedStores = ['userStore', 'authStore'];
 
 export const RootStoreModel = types
   .model('RootStore')
   .props({
-    userStore: types.optional(UserStoreModel, {}),
+    userStore: types.optional(UserStoreModel, {
+      status: RequestStatus.IDLE,
+      user_email: '',
+      fitbit_id: '',
+      steps_synced: 0,
+      last_synced: Date.now(),
+      last_run: Date.now(),
+      user_account_status: 'free',
+    }),
     authStore: types.optional(AuthStoreModel, {}),
     configStore: types.optional(ConfigStoreModel, {}),
     navigationStore: types.optional(NavigationStoreModel, {}),
     metadataStore: types.optional(MetadataStoreModel, {}),
+    stripeStore: types.optional(StripeStoreModel, {}),
   })
   .views((self) => ({
     get environment() {

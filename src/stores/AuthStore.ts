@@ -1,7 +1,7 @@
 import { types, getEnv, getRoot, flow, getParent } from 'mobx-state-tree';
 import { isNull, isUndefined } from 'underscore';
 
-import { LoginResult } from '../models';
+import { GetAuthorizationUrlResult, LoginResult, ServiceLoginResult } from '../models';
 import { RequestStatusModel, RequestStatus } from '../libs/helpers';
 import { Environment } from '../core/environment';
 import { RootStore } from './store.types';
@@ -16,7 +16,6 @@ export const AuthStoreModel = types
      */
     status: RequestStatusModel,
     idToken: types.maybe(types.string),
-    refreshToken: types.maybe(types.string),
   })
   .views((self) => ({
     get environment() {
@@ -52,6 +51,41 @@ export const AuthStoreModel = types
     },
   }))
   .actions((self) => ({
+    getAuthorizationUrl: flow(function* (service: string) {
+      self.setStatus(RequestStatus.PENDING);
+      try {
+        const response: GetAuthorizationUrlResult = yield self.environment.serviceApi.getAuthorizationUrl(
+          service,
+        );
+        if (response.kind === 'ok') {
+          self.setStatus(RequestStatus.DONE);
+          return response.data;
+        } else {
+          throw new Error(JSON.stringify(response));
+        }
+      } catch (error) {
+        self.setStatus(RequestStatus.ERROR);
+        throw new Error(error.message || error);
+      }
+    }),
+    loginWithService: flow(function* (service: string, code: string) {
+      self.setStatus(RequestStatus.PENDING);
+      try {
+        const response: ServiceLoginResult = yield self.environment.serviceApi.login(service, code);
+        if (response.kind === 'ok') {
+          self.updateUserToken(response.data);
+          self.getUserStore().setUser(response.data);
+          self.rootStore.configStore.load();
+          self.setStatus(RequestStatus.DONE);
+        } else {
+          self.setStatus(RequestStatus.ERROR);
+          throw new Error(JSON.stringify(response));
+        }
+      } catch (error) {
+        self.setStatus(RequestStatus.ERROR);
+        throw new Error(error.message || error);
+      }
+    }),
     loginWithEmail: flow(function* (email: string, password: string) {
       self.setStatus(RequestStatus.PENDING);
       try {
